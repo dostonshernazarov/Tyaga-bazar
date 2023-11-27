@@ -46,9 +46,9 @@ async def reklama_photo(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=Reklama.photo_reklama_text)
 async def check_photoReklama(message: types.Message):
-    global MESSAGE
-    MESSAGE = str(message.text)
-    await message.answer_photo(PHOTO_ID, caption=MESSAGE)
+    global MESSAGE_P
+    MESSAGE_P = str(message.text)
+    await message.answer_photo(PHOTO_ID, caption=MESSAGE_P)
     await message.answer("Reklamani foydalanuvchilarga yuborasizmi?", reply_markup=config_keyboard)
     await Reklama.photo_config.set()
 
@@ -103,7 +103,7 @@ async def config_photoReklama(call: types.CallbackQuery, state: FSMContext):
     users = db.select_all_users()
     for user in users:
         user_id = user[0]
-        await bot.send_photo(chat_id=user_id, photo=PHOTO_ID, caption=MESSAGE)
+        await bot.send_photo(chat_id=user_id, photo=PHOTO_ID, caption=MESSAGE_P)
         await asyncio.sleep(0.05)
 
     count = db.count_users()[0]
